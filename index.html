@@ -3,29 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio - Home</title>
+    <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to My Portfolio</h1>
+        <h1>My Portfolio</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#beginner">Beginner Projects</a></li>
+                <li><a href="#intermediate">Intermediate Projects</a></li>
+                <li><a href="#advanced">Advanced Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hi, I'm Joey Wylam, a software engineering enthusiast with a background in mathematics. I love creating projects that solve real problems, and I’m currently working on building my portfolio as I pursue a career in software engineering.</p>
-        <p>I have experience with programming languages like Python, JavaScript, and more. Feel free to explore my projects and reach out!</p>
+    <section id="home">
+        <h2>Welcome!</h2>
+        <p>Hi, I'm [Your Name]! I'm a software engineer and data analyst. Here, you'll find projects I've worked on, categorized by difficulty level to showcase my growth as a developer.</p>
+    </section>
+
+    <section id="beginner">
+        <h2>Beginner Projects</h2>
+        <div class="project-card">
+            <h3>To-Do List App</h3>
+            <p>A simple to-do list application for managing daily tasks.</p>
+            <a href="todolist.html">View Project</a>
+        </div>
+        <div class="project-card">
+            <h3>Note-Taking App</h3>
+            <p>A web-based app to create, edit, and organize notes.</p>
+            <a href="notetaking.html">View Project</a>
+        </div>
+        <div class="project-card">
+            <h3>Quiz App</h3>
+            <p>A quiz app where users can answer questions on various topics.</p>
+            <a href="quizapp.html">View Project</a>
+        </div>
+    </section>
+
+    <section id="intermediate">
+        <h2>Intermediate Projects</h2>
+        <div class="project-card">
+            <h3>Weather App</h3>
+            <p>A weather app that provides current conditions and a 7-day forecast.</p>
+            <a href="weatherapp.html">View Project</a>
+        </div>
+        <div class="project-card">
+            <h3>Recipe Finder App</h3>
+            <p>A recipe finder where users can search recipes by ingredients.</p>
+            <a href="recipefinder.html">View Project</a>
+        </div>
+        <!-- Add more intermediate projects here -->
+    </section>
+
+    <section id="advanced">
+        <h2>Advanced Projects</h2>
+        <div class="project-card">
+            <h3>Personal Portfolio Website</h3>
+            <p>A multi-page portfolio showcasing my skills and projects.</p>
+            <a href="portfolio.html">View Project</a>
+        </div>
+        <div class="project-card">
+            <h3>Blogging Platform</h3>
+            <p>A simple blogging platform to create, edit, and delete posts.</p>
+            <a href="bloggingplatform.html">View Project</a>
+        </div>
+        <!-- Add more advanced projects here -->
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>If you'd like to get in touch, please feel free to reach out!</p>
+        <p>Email: [Your Email]</p>
     </section>
 
     <footer>
-        <p>© 2024 Joey Wylam</p>
+        <p>© 2024 [Your Name]. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
