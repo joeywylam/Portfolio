@@ -30,3 +30,82 @@
         <h3>Project Code</h3>
         <pre>
 
+<code>
+import pandas as pd
+
+# Read initial ratings from CSV
+initial_ratings = pd.read_csv('initial_ratings round 1 - initial_ratings.csv')
+teams = dict(zip(initial_ratings['Team'], initial_ratings['Rating']))
+
+# Read matchups from CSV
+matches = pd.read_csv('matchups - matchups.csv')
+
+# Check if necessary columns exist in the matchups DataFrame
+required_columns = ['Week', 'Team 1', 'Team 2', 'Team 1 Score', 'Team 2 Score']
+for col in required_columns:
+    if col not in matches.columns:
+        raise ValueError(f"Column '{col}' is missing from the matchups CSV file.")
+
+# Function to convert scores to integers, handling errors
+def convert_scores(scores):
+    return pd.to_numeric(scores, errors='coerce')
+
+matches['Team 1 Score'] = convert_scores(matches['Team 1 Score'])
+matches['Team 2 Score'] = convert_scores(matches['Team 2 Score'])
+
+# Check for rows with missing or invalid scores and remove them
+matches.dropna(subset=['Team 1 Score', 'Team 2 Score'], inplace=True)
+
+# Convert scores to integers
+matches['Team 1 Score'] = matches['Team 1 Score'].astype(int)
+matches['Team 2 Score'] = matches['Team 2 Score'].astype(int)
+
+# Convert Week to integers
+matches['Week'] = matches['Week'].astype(int)
+
+# Function to determine the K-factor based on initial rating
+def get_k_factor(initial_rating):
+    if 800 <= initial_rating < 900:
+        return 32
+    elif 900 <= initial_rating < 1100:
+        return 24
+    elif initial_rating >= 1100:
+        return 16
+    return 32  # Default K-factor if rating falls outside defined ranges
+
+# Elo rating calculation function
+def calculate_elo_rating(R1, R2, score1, score2, K1, K2):
+    E1 = 1 / (1 + 10 ** ((R2 - R1) / 400))
+    E2 = 1 / (1 + 10 ** ((R1 - R2) / 400))
+    W1 = 1 if score1 > score2 else 0
+    W2 = 1 if score2 > score1 else 0
+    new_R1 = R1 + K1 * (W1 - E1)
+    new_R2 = R2 + K2 * (W2 - E2)
+    return new_R1, new_R2
+
+# DataFrame to store ratings week by week
+rating_history = pd.DataFrame(columns=['Week', 'Team', 'Rating'])
+
+# Update ratings based on matches
+for index, match in matches.iterrows():
+    week = match['Week']
+    team1, team2 = match['Team 1'], match['Team 2']
+    score1, score2 = match['Team 1 Score'], match['Team 2 Score']
+
+    R1, R2 = teams[team1], teams[team2]
+    initial_R1, initial_R2 = initial_ratings.loc[initial_ratings['Team'] == team1, 'Rating'].values[0], initial_ratings.loc[initial_ratings['Team'] == team2, 'Rating'].values[0]
+    K1, K2 = get_k_factor(initial_R1), get_k_factor(initial_R2)
+
+    new_R1, new_R2 = calculate_elo_rating(R1, R2, score1, score2, K1, K2)
+
+    teams[team1], teams[team2] = new_R1, new_R2
+
+    rating_history = pd.concat([rating_history, pd.DataFrame([{'Week': week, 'Team': team1, 'Rating': new_R1}, {'Week': week, 'Team': team2, 'Rating': new_R2}])], ignore_index=True)
+
+# Save rating history to CSV
+rating_history.to_csv('rating_history.csv', index=False)
+</code>
+        </pre>
+    </main>
+</body>
+</html>
